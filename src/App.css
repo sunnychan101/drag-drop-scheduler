@@ -28,6 +28,10 @@
   color: #61dafb;
 }
 
+.custom-container {
+  margin: 50px;
+}
+
 @keyframes App-logo-spin {
   from {
     transform: rotate(0deg);
@@ -35,4 +39,40 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.k-scheduler-cell.k-resource-cell {
+  color: red;
+}
+.k-scheduler-row .k-slot-cell {
+  border-right: none;
+}
+
+.k-scheduler-row .k-slot-cell:nth-child(4n) {
+  border-right: 1px solid #ccc;
+  /* background-color: green; */
+}
+
+.k-event {
+  color: black;
+  background-color: transparent;
+  height: 50px !important;
+  border: solid;
+}
+
+.service-group {
+  height: 100px;
+  padding: 10px;
+}
+
+.service-row {
+  border: 1px #ccc solid;
+  padding-top: 20px;
+  padding-bottom: 40px;
+  width: 100%;
+}
+
+.service-item {
+  margin-left: 100px;
+  display: inline-block;
 }
