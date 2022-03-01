@@ -58,6 +58,24 @@ function App() {
 
     return myData;
   };
+
+  const newExistingName = (ppl) => {
+    var texts = [];
+    var step = -1;
+    for (const data of resource_data) {
+      texts.push(data.text);
+    }
+    console.log(texts);
+    while (texts.includes(ppl)) {
+      ppl = ppl + " (Extra)";
+      step = step + 1;
+      if (step == 1) {
+        return "die";
+      }
+    }
+    return ppl;
+  };
+
   const configCustomResourceData = (resourceData) => {
     var texts = [];
     var newResourceData = [];
@@ -71,6 +89,7 @@ function App() {
         text: data_text,
         ppl: data.text,
         value: data.value,
+        removable: data.removable,
       });
     }
     // console.log(newResourceData);
@@ -78,11 +97,11 @@ function App() {
   };
   const [dataToShow, set_DataToShow] = React.useState(adddate(customData));
   const [resource_data, set_resource_data] = React.useState(
-    configCustomResourceData(customResourceData)
+    // configCustomResourceData(customResourceData)
+    customResourceData
   );
   const [dragItem, set_dragItem] = React.useState("");
   const [ddswitch, set_ddswitch] = React.useState(true);
-  const [taskCounter, set_taskCounter] = React.useState(1);
 
   const dateChangeHandler = (date) => {
     set_currentDate(dateToString(date.value));
@@ -90,23 +109,27 @@ function App() {
   };
 
   const addNewSchedule = (index, item, caseId) => {
-    dataToShow.splice(index, 0, {
+    console.log(index);
+    dataToShow.push({
       id: dataToShow.length,
       start: item.start, //"10:00",
       end: item.end, //"18:00",
       title: item.title,
-      caseId: caseId, //"New PeopleSO004-2022",
+      caseId: caseId, //"New People (Extra)",
+      pplId: index,
     });
     set_DataToShow(adddate(dataToShow));
   };
 
   const addNewResourceData = (index, caseId, targetPpl) => {
     resource_data.splice(index, 0, {
-      text: targetPpl,
+      text: caseId,
       ppl: targetPpl,
-      value: caseId, // caseId
+      value: caseId,
+      removable: true,
     });
-    set_resource_data(configCustomResourceData(resource_data));
+    set_resource_data(resource_data);
+
     // set_xxx("sss");
   };
 
@@ -131,32 +154,26 @@ function App() {
       return;
     } else {
       console.log("else");
-      while (
-        !(
-          ele.classList.contains("k-scheduler-cell") &&
-          ele.classList.contains("k-group-content")
-        ) ||
-        ele.classList.contains("k-resource-row")
-      ) {
-        childNode = ele;
+      while (!ele.classList.contains("k-resource-row")) {
         ele = ele.parentElement;
       }
-      var childEles = ele.childNodes;
-
-      for (var i = 0; i < childEles.length; i++) {
-        if (childNode.isEqualNode(childEles[i])) {
-          index = i;
-        }
-      }
+      index = parseInt(ele.getAttribute("data-resource-index"));
     }
-    const targetPpl = resource_data[index].text;
+    const targetPpl = resource_data[index].ppl;
     console.log("Dropped on:  " + targetPpl);
 
     const item = dragItem;
-    const caseId =
-      targetPpl + item.ServivceOrderNumber + "#" + taskCounter.toString();
-    set_taskCounter(taskCounter + 1);
+    // const caseId =
+    //   targetPpl + item.ServivceOrderNumber + "#" + taskCounter.toString();
+    // set_taskCounter(taskCounter + 1);
+
+    const caseId = newExistingName(targetPpl);
+    if (caseId == "die") {
+      return console.log("cannot handle more than 2 item");
+    }
+    console.log(caseId);
     addNewResourceData(index + 1, caseId, targetPpl);
+
     for (const serviceItem of item.ServiceItems) {
       addNewSchedule(index + 1, serviceItem, caseId);
     }
@@ -185,9 +202,14 @@ function App() {
       set_dragItem(newItem);
     }
   };
+
   useEffect(() => {
     document.addEventListener("dragover", function (ev) {
       ev.preventDefault();
+    });
+    document.addEventListener("mousedown", function (ev) {
+      console.log(ev.target);
+      console.log(ev.target.parentElement);
     });
   }, []);
   console.log(dataToShow);

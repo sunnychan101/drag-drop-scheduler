@@ -5,21 +5,21 @@ const jsonData = [
     ServiceOrderNumber: "SO001-2022",
     AssignedTo: "",
     ServiceItems: [
-      {
-        TimeFrom: "9:00",
-        TimeTo: "10:30",
-        ServiceType: "Personal Care",
-      },
-      {
-        TimeFrom: "14:00",
-        TimeTo: "15:00",
-        ServiceType: "Shopping",
-      },
-      {
-        TimeFrom: "15:30",
-        TimeTo: "16:15",
-        ServiceType: "Meal Delivery",
-      },
+      // {
+      //   TimeFrom: "9:00",
+      //   TimeTo: "10:30",
+      //   ServiceType: "Personal Care",
+      // },
+      // {
+      //   TimeFrom: "14:00",
+      //   TimeTo: "15:00",
+      //   ServiceType: "Shopping",
+      // },
+      // {
+      //   TimeFrom: "15:30",
+      //   TimeTo: "16:15",
+      //   ServiceType: "Meal Delivery",
+      // },
     ],
   },
   {
@@ -112,20 +112,22 @@ const gridData = [
 const myData = [];
 const myResourceData = [];
 
-for (const mycase of jsonData) {
-  var caseName = mycase.CaseName;
-  var ServiceOrderNumber = mycase.ServiceOrderNumber;
+for (var m = 0; m < jsonData.length; m++) {
+  var caseName = jsonData[m].CaseName;
+  var ServiceOrderNumber = jsonData[m].ServiceOrderNumber;
   myResourceData.push({
     text: caseName,
     ppl: caseName,
-    value: caseName + ServiceOrderNumber,
+    value: caseName,
+    removable: false,
   });
-  for (const serviceItem of mycase.ServiceItems) {
+  for (var i = 0; i < jsonData[m].ServiceItems.length; i++) {
     myData.push({
-      start: serviceItem.TimeFrom,
-      end: serviceItem.TimeTo,
-      title: serviceItem.ServiceType,
-      caseId: caseName + ServiceOrderNumber,
+      start: jsonData[m].ServiceItems[i].TimeFrom,
+      end: jsonData[m].ServiceItems[i].TimeTo,
+      title: jsonData[m].ServiceItems[i].ServiceType,
+      caseId: caseName,
+      pplId: m,
     });
   }
 }

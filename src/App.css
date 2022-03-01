@@ -48,7 +48,7 @@
   border-right: none;
 }
 
-.k-scheduler-row .k-slot-cell:nth-child(4n) {
+.k-scheduler-row .k-slot-cell:nth-child(2n) {
   border-right: 1px solid #ccc;
   /* background-color: green; */
 }

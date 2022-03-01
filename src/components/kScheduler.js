@@ -9,6 +9,8 @@ import {
 import React, { useEffect } from "react";
 import { Day } from "@progress/kendo-date-math";
 
+import { ProportionalViewItem } from "./proportional-view-port";
+
 function KScheduler(props) {
   const [orientation, set_orientation] = React.useState("vertical");
 
@@ -68,9 +70,8 @@ function KScheduler(props) {
       <TimelineView
         title="Hour-By-Hour"
         numberOfDays={1}
-        columnWidth={45}
-        slotDuration={60} //in minutes
-        slotDivisions={4}
+        slotDuration={30} //in minutes
+        slotDivisions={1}
         startTime={"08:00"}
         endTime={"19:00"}
         workDayStart={"09:00"}
@@ -78,6 +79,7 @@ function KScheduler(props) {
         workWeekStart={Day.Sunday}
         workWeekEnd={Day.Monday}
         showWorkHours={true}
+        viewItem={ProportionalViewItem}
       />
     </Scheduler>
   );
