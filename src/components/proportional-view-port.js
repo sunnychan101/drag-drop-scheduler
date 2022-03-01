@@ -51,10 +51,6 @@ export const ProportionalViewItem = (props) => {
     if (!element) {
       return;
     }
-    console.log(pxPerMilisecond);
-    console.log(offset);
-    console.log(total);
-    console.log("in old");
 
     window.requestAnimationFrame(() => {
       if (props.vertical) {

@@ -3,9 +3,7 @@ import "@progress/kendo-theme-default";
 import "@progress/kendo-theme-material";
 import "@progress/kendo-theme-bootstrap";
 import "./App.css";
-import React, { useEffect } from "react";
-import { Scheduler, TimelineView } from "@progress/kendo-react-scheduler";
-import { Day } from "@progress/kendo-date-math";
+import React, { useEffect, useReducer } from "react";
 import { displayDate, sampleData, sampleDataWithResources } from "./events";
 import { customData, customResourceData } from "./myevent";
 import KScheduler from "./components/kScheduler";
@@ -52,6 +50,7 @@ function App() {
           item.end.length < 6 ? stringToDate(configTime(item.end)) : item.end,
         title: item.title,
         caseId: item.caseId,
+        pplId: item.pplId,
       };
       myData.push(myitem);
     }
@@ -102,10 +101,31 @@ function App() {
   );
   const [dragItem, set_dragItem] = React.useState("");
   const [ddswitch, set_ddswitch] = React.useState(true);
+  const [dragIndex, set_dragIndex] = React.useState(false);
+
+  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
 
   const dateChangeHandler = (date) => {
     set_currentDate(dateToString(date.value));
     console.log(currentDate);
+  };
+
+  const mappplId = (arr) => {
+    for (var i = 0; i < resource_data.length; i++) {
+      for (var j = 0; j < arr.length; j++) {
+        if (arr[j].caseId == resource_data[i].value) {
+          arr[j].pplId = resource_data[i].id;
+        }
+      }
+    }
+    return arr;
+  };
+
+  const assignResourceId = (arr) => {
+    for (var i = 0; i < arr.length; i++) {
+      arr[i].id = i;
+    }
+    return arr;
   };
 
   const addNewSchedule = (index, item, caseId) => {
@@ -118,64 +138,140 @@ function App() {
       caseId: caseId, //"New People (Extra)",
       pplId: index,
     });
-    set_DataToShow(adddate(dataToShow));
+
+    const newDataToShow = mappplId(dataToShow);
+
+    set_DataToShow(adddate(newDataToShow));
   };
 
   const addNewResourceData = (index, caseId, targetPpl) => {
     resource_data.splice(index, 0, {
+      id: index,
       text: caseId,
       ppl: targetPpl,
       value: caseId,
       removable: true,
     });
-    set_resource_data(resource_data);
+
+    const newResourceData = assignResourceId(resource_data);
+
+    set_resource_data(newResourceData);
 
     // set_xxx("sss");
   };
 
-  const dropHandler = (ev, target) => {
-    console.log("Dropped on:");
-    console.log(target);
-    set_ddswitch(true);
-    var childNode;
-    var ele = target;
-    var index;
-    console.log(ele.classList);
-    if (
-      ele.classList.contains("k-event-template") ||
-      ele.classList.contains("k-event")
-    ) {
-      while (!ele.classList.contains("k-event")) {
-        ele = ele.parentElement;
+  const hasSchedule = (targetId) => {
+    for (var i = 0; i < dataToShow.length; i++) {
+      if (dataToShow[i].pplId == targetId) {
+        return true;
       }
-      index = parseInt(ele.getAttribute("data-group-index"));
-      console.log("here");
-    } else if (!ele.classList.contains("k-slot-cell")) {
-      return;
+    }
+    return false;
+  };
+  const moveSchedule = (oldId, newId) => {
+    var ppl;
+    for (var j = 0; j < resource_data.length; j++) {
+      if (resource_data[j].id == newId) {
+        ppl = resource_data[j].value;
+      }
+    }
+    var newDataToShow = dataToShow;
+    for (var i = 0; i < newDataToShow.length; i++) {
+      console.log("_____________________");
+      console.log(newDataToShow[i].pplId);
+      console.log(oldId);
+      console.log(ppl);
+      if (newDataToShow[i].pplId == oldId) {
+        console.log("moved");
+        newDataToShow[i].pplId = parseInt(newId);
+        newDataToShow[i].caseId = ppl;
+      }
+    }
+    console.log("everything ready");
+    console.log(newDataToShow);
+    set_DataToShow(newDataToShow);
+    forceUpdate();
+  };
+
+  const moveDataToShow = (oldId, newId) => {
+    // case 1: oldid has schedule, newid empty
+    if (hasSchedule(newId) == false) {
+      moveSchedule(oldId, newId);
     } else {
-      console.log("else");
-      while (!ele.classList.contains("k-resource-row")) {
+    }
+
+    // case 2: oldid has schedule, newid has schedule
+  };
+
+  const dropHandler = (ev, target) => {
+    console.log(dragIndex);
+    if (dragIndex !== false) {
+      console.log("it is dragged from scheduler");
+      var ele = target;
+      while (
+        !ele.hasAttribute("data-resource-index") &&
+        !ele.hasAttribute("data-group-index")
+      ) {
         ele = ele.parentElement;
+        console.log(ele);
       }
-      index = parseInt(ele.getAttribute("data-resource-index"));
-    }
-    const targetPpl = resource_data[index].ppl;
-    console.log("Dropped on:  " + targetPpl);
+      var index;
+      if (ele.hasAttribute("data-resource-index")) {
+        index = ele.getAttribute("data-resource-index");
+      } else {
+        index = ele.getAttribute("data-group-index");
+      }
+      console.log(index);
+      moveDataToShow(dragIndex, index);
+    } else {
+      console.log("Dropped on:");
+      console.log(target);
+      set_ddswitch(true);
+      var childNode;
+      var ele = target;
+      var index;
+      console.log(ele.classList);
+      if (
+        ele.classList.contains("k-event-template") ||
+        ele.classList.contains("k-event")
+      ) {
+        while (!ele.classList.contains("k-event")) {
+          ele = ele.parentElement;
+        }
+        index = parseInt(ele.getAttribute("data-group-index"));
+      } else if (!ele.classList.contains("k-slot-cell")) {
+        return;
+      } else {
+        while (!ele.classList.contains("k-resource-row")) {
+          ele = ele.parentElement;
+        }
+        index = parseInt(ele.getAttribute("data-resource-index"));
+      }
+      const targetPpl = resource_data[index].ppl;
+      const targetId = resource_data[index].id;
+      console.log("Dropped on:  " + targetPpl);
+      var caseId;
+      const item = dragItem;
+      // const caseId =
+      //   targetPpl + item.ServivceOrderNumber + "#" + taskCounter.toString();
+      // set_taskCounter(taskCounter + 1);
 
-    const item = dragItem;
-    // const caseId =
-    //   targetPpl + item.ServivceOrderNumber + "#" + taskCounter.toString();
-    // set_taskCounter(taskCounter + 1);
+      if (hasSchedule(targetId) == false) {
+        console.log("no schedule for this id");
+        caseId = targetPpl;
+      } else {
+        index = index + 1;
+        caseId = newExistingName(targetPpl);
+        if (caseId == "die") {
+          return console.log("cannot handle more than 2 item");
+        }
+        console.log(caseId);
+        addNewResourceData(index, caseId, targetPpl);
+      }
 
-    const caseId = newExistingName(targetPpl);
-    if (caseId == "die") {
-      return console.log("cannot handle more than 2 item");
-    }
-    console.log(caseId);
-    addNewResourceData(index + 1, caseId, targetPpl);
-
-    for (const serviceItem of item.ServiceItems) {
-      addNewSchedule(index + 1, serviceItem, caseId);
+      for (const serviceItem of item.ServiceItems) {
+        addNewSchedule(index, serviceItem, caseId);
+      }
     }
   };
 
@@ -208,8 +304,30 @@ function App() {
       ev.preventDefault();
     });
     document.addEventListener("mousedown", function (ev) {
-      console.log(ev.target);
-      console.log(ev.target.parentElement);
+      var ele = ev.target;
+      while (
+        !ele.hasAttribute("data-resource-index") &&
+        !ele.hasAttribute("data-group-index")
+      ) {
+        ele = ele.parentElement;
+        console.log(ele);
+      }
+      var index;
+      if (ele.hasAttribute("data-resource-index")) {
+        index = ele.getAttribute("data-resource-index");
+      } else {
+        index = ele.getAttribute("data-group-index");
+      }
+      if (hasSchedule(index) == false) {
+        return console.log("nothing in this row");
+      }
+      ele.setAttribute("draggable", true);
+      console.log(index);
+      set_dragIndex(index);
+    });
+    document.addEventListener("mouseup", function () {
+      console.log("you release");
+      set_dragIndex(false);
     });
   }, []);
   console.log(dataToShow);

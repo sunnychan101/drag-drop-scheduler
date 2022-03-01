@@ -116,6 +116,7 @@ for (var m = 0; m < jsonData.length; m++) {
   var caseName = jsonData[m].CaseName;
   var ServiceOrderNumber = jsonData[m].ServiceOrderNumber;
   myResourceData.push({
+    id: m,
     text: caseName,
     ppl: caseName,
     value: caseName,
