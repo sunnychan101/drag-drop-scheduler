@@ -64,7 +64,7 @@ function App() {
     for (const data of resource_data) {
       texts.push(data.text);
     }
-    console.log(texts);
+
     while (texts.includes(ppl)) {
       ppl = ppl + " (Extra)";
       step = step + 1;
@@ -91,7 +91,6 @@ function App() {
         removable: data.removable,
       });
     }
-    // console.log(newResourceData);
     return newResourceData;
   };
   const [dataToShow, set_DataToShow] = React.useState(adddate(customData));
@@ -107,7 +106,6 @@ function App() {
 
   const dateChangeHandler = (date) => {
     set_currentDate(dateToString(date.value));
-    console.log(currentDate);
   };
 
   const mappplId = (arr) => {
@@ -129,7 +127,7 @@ function App() {
   };
 
   const addNewSchedule = (index, item, caseId) => {
-    console.log(index);
+    // console.log(index);
     dataToShow.push({
       id: dataToShow.length,
       start: item.start, //"10:00",
@@ -177,18 +175,14 @@ function App() {
     }
     var newDataToShow = dataToShow;
     for (var i = 0; i < newDataToShow.length; i++) {
-      console.log("_____________________");
-      console.log(newDataToShow[i].pplId);
-      console.log(oldId);
-      console.log(ppl);
       if (newDataToShow[i].pplId == oldId) {
         console.log("moved");
         newDataToShow[i].pplId = parseInt(newId);
         newDataToShow[i].caseId = ppl;
       }
     }
-    console.log("everything ready");
-    console.log(newDataToShow);
+    // console.log("everything ready");
+    // console.log(newDataToShow);
     set_DataToShow(newDataToShow);
     forceUpdate();
   };
@@ -204,7 +198,7 @@ function App() {
   };
 
   const dropHandler = (ev, target) => {
-    console.log(dragIndex);
+    // console.log(dragIndex);
     if (dragIndex !== false) {
       console.log("it is dragged from scheduler");
       var ele = target;
@@ -213,7 +207,6 @@ function App() {
         !ele.hasAttribute("data-group-index")
       ) {
         ele = ele.parentElement;
-        console.log(ele);
       }
       var index;
       if (ele.hasAttribute("data-resource-index")) {
@@ -221,11 +214,11 @@ function App() {
       } else {
         index = ele.getAttribute("data-group-index");
       }
-      console.log(index);
+      // console.log(index);
       moveDataToShow(dragIndex, index);
     } else {
-      console.log("Dropped on:");
-      console.log(target);
+      // console.log("Dropped on:");
+      // console.log(target);
       set_ddswitch(true);
       var childNode;
       var ele = target;
@@ -257,7 +250,7 @@ function App() {
       // set_taskCounter(taskCounter + 1);
 
       if (hasSchedule(targetId) == false) {
-        console.log("no schedule for this id");
+        console.log("no schedule for this id", targetId);
         caseId = targetPpl;
       } else {
         index = index + 1;
@@ -265,7 +258,7 @@ function App() {
         if (caseId == "die") {
           return console.log("cannot handle more than 2 item");
         }
-        console.log(caseId);
+        // console.log(caseId);
         addNewResourceData(index, caseId, targetPpl);
       }
 
@@ -286,7 +279,7 @@ function App() {
         ServiceItems: [],
       };
       for (const child of ev.target.childNodes) {
-        console.log(child.nodeType);
+        // console.log(child.nodeType);
         if (child.nodeType != 3) {
           newItem.ServiceItems.push({
             start: child.getAttribute("data-start"),
@@ -300,6 +293,7 @@ function App() {
   };
 
   useEffect(() => {
+    console.log("called useEffect");
     document.addEventListener("dragover", function (ev) {
       ev.preventDefault();
     });
@@ -310,7 +304,6 @@ function App() {
         !ele.hasAttribute("data-group-index")
       ) {
         ele = ele.parentElement;
-        console.log(ele);
       }
       var index;
       if (ele.hasAttribute("data-resource-index")) {
@@ -322,7 +315,7 @@ function App() {
         return console.log("nothing in this row");
       }
       ele.setAttribute("draggable", true);
-      console.log(index);
+
       set_dragIndex(index);
     });
     document.addEventListener("mouseup", function () {
@@ -330,9 +323,10 @@ function App() {
       set_dragIndex(false);
     });
   }, []);
-  console.log(dataToShow);
-  console.log(dragItem);
-  console.log(resource_data);
+  console.log("render App.js");
+  // console.log(dataToShow);
+  // console.log(dragItem);
+  // console.log(resource_data);
 
   return (
     <div className="custom-container">

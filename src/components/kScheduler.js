@@ -34,6 +34,8 @@ function KScheduler(props) {
       />
     );
   };
+  console.log("render kScheduler.js");
+  // console.log(dataToShow);
 
   return (
     <Scheduler
@@ -57,9 +59,6 @@ function KScheduler(props) {
         },
       ]}
       defaultDate={displayDate}
-      onRelease={() => {
-        console.log("dropped");
-      }}
 
       // editable={{
       //   drag: true,
