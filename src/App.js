@@ -32,6 +32,8 @@ function App() {
     dateToString(displayDate)
   );
 
+  const [testAttr, set_testAttr] = React.useState(0);
+
   const configTime = (time) => {
     return currentDate + "T" + time;
   };
@@ -102,8 +104,6 @@ function App() {
   const [ddswitch, set_ddswitch] = React.useState(true);
   const [dragIndex, set_dragIndex] = React.useState(false);
 
-  const [ignored, forceUpdate] = useReducer((x) => x + 1, 0);
-
   const dateChangeHandler = (date) => {
     set_currentDate(dateToString(date.value));
   };
@@ -126,7 +126,7 @@ function App() {
     return arr;
   };
 
-  const addNewSchedule = (index, item, caseId) => {
+  const addNewSchedule = (index, item, caseId, addDate = true) => {
     // console.log(index);
     dataToShow.push({
       id: dataToShow.length,
@@ -139,12 +139,19 @@ function App() {
 
     const newDataToShow = mappplId(dataToShow);
 
-    set_DataToShow(adddate(newDataToShow));
+    if (addDate) {
+      set_DataToShow(adddate(newDataToShow));
+    } else {
+      set_DataToShow(newDataToShow);
+    }
+    // set_DataToShow(adddate(newDataToShow));
   };
 
   const addNewResourceData = (index, caseId, targetPpl) => {
+    console.log("splice in ");
+    console.log(index);
     resource_data.splice(index, 0, {
-      id: index,
+      id: index, //will change afterward
       text: caseId,
       ppl: targetPpl,
       value: caseId,
@@ -158,15 +165,18 @@ function App() {
     // set_xxx("sss");
   };
 
-  const hasSchedule = (targetId) => {
-    for (var i = 0; i < dataToShow.length; i++) {
-      if (dataToShow[i].pplId == targetId) {
-        return true;
+  const hasSchedule = React.useCallback(
+    (targetId) => {
+      for (var i = 0; i < dataToShow.length; i++) {
+        if (dataToShow[i].pplId == targetId) {
+          return true;
+        }
       }
-    }
-    return false;
-  };
-  const moveSchedule = (oldId, newId) => {
+      return false;
+    },
+    [dataToShow]
+  );
+  const moveSchedule = async (oldId, newId) => {
     var ppl;
     for (var j = 0; j < resource_data.length; j++) {
       if (resource_data[j].id == newId) {
@@ -179,19 +189,44 @@ function App() {
         console.log("moved");
         newDataToShow[i].pplId = parseInt(newId);
         newDataToShow[i].caseId = ppl;
+        newDataToShow[i].casuallyUselessAttr = 0;
       }
     }
     // console.log("everything ready");
-    // console.log(newDataToShow);
+    console.log(newDataToShow);
     set_DataToShow(newDataToShow);
-    forceUpdate();
+    // var newRD = resource_data;
+    // set_resource_data(newRD);
+    console.log("set already");
   };
 
   const moveDataToShow = (oldId, newId) => {
     // case 1: oldid has schedule, newid empty
     if (hasSchedule(newId) == false) {
       moveSchedule(oldId, newId);
-    } else {
+    }
+    // case 2: drag on same ppl
+    else if (newId == oldId) {
+      return console.log("Dragged on same ppl");
+    }
+    // case 3: drag on ppl who already has schedule
+    else {
+      const targetPpl = resource_data[newId].ppl;
+      const caseId = newExistingName(targetPpl);
+      if (caseId == "die") {
+        return;
+      }
+      addNewResourceData(parseInt(newId) + 1, caseId, targetPpl);
+
+      var dataToPush = [];
+      for (var i = 0; i < dataToShow.length; i++) {
+        if (dataToShow[i].pplId == oldId) {
+          dataToPush.push(dataToShow[i]);
+        }
+      }
+      for (const serviceItem of dataToPush) {
+        addNewSchedule(parseInt(newId) + 1, serviceItem, caseId, false);
+      }
     }
 
     // case 2: oldid has schedule, newid has schedule
@@ -199,16 +234,20 @@ function App() {
 
   const dropHandler = (ev, target) => {
     // console.log(dragIndex);
+
+    var ele = target;
+    var index;
     if (dragIndex !== false) {
       console.log("it is dragged from scheduler");
-      var ele = target;
+      set_testAttr(testAttr + 1);
+
       while (
         !ele.hasAttribute("data-resource-index") &&
         !ele.hasAttribute("data-group-index")
       ) {
         ele = ele.parentElement;
       }
-      var index;
+
       if (ele.hasAttribute("data-resource-index")) {
         index = ele.getAttribute("data-resource-index");
       } else {
@@ -220,9 +259,7 @@ function App() {
       // console.log("Dropped on:");
       // console.log(target);
       set_ddswitch(true);
-      var childNode;
-      var ele = target;
-      var index;
+
       console.log(ele.classList);
       if (
         ele.classList.contains("k-event-template") ||
@@ -322,11 +359,11 @@ function App() {
       console.log("you release");
       set_dragIndex(false);
     });
-  }, []);
+  }, [hasSchedule]);
   console.log("render App.js");
-  // console.log(dataToShow);
-  // console.log(dragItem);
-  // console.log(resource_data);
+  console.log(dataToShow);
+  console.log(dragItem);
+  console.log(resource_data);
 
   return (
     <div className="custom-container">

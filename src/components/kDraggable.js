@@ -24,18 +24,17 @@ function KDraggable(props) {
     );
   };
 
-  const renderService = (item) => {
-    var idCounter = 0;
+  const renderService = (item, index) => {
     return (
       <div
-        id={item.ServiceOrderNumber}
+        id={item.ServiceOrderNumber + index}
         className="service-row"
         draggable
         onDrag={(ev) => dragHandler(ev)}
       >
         {item.CaseNumber}
-        {item.ServiceItems.map((service) => {
-          return rendersmallItem(service, idCounter++);
+        {item.ServiceItems.map((service, index2) => {
+          return rendersmallItem(service, index2);
         })}
       </div>
     );
@@ -43,8 +42,8 @@ function KDraggable(props) {
 
   return (
     <div className="service-group">
-      {customGridData.map((item) => {
-        return renderService(item);
+      {customGridData.map((item, index) => {
+        return renderService(item, index);
       })}
     </div>
   );
