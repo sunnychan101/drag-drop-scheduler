@@ -69,11 +69,11 @@ function KScheduler(props) {
         />
       </Scheduler>
 
-      <div>
+      {/* <div>
         {dataToShow.map((item, index) => {
           return <div id={index}>{item.caseId}</div>;
         })}
-      </div>
+      </div> */}
     </div>
   );
 }
