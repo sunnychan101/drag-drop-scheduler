@@ -31,17 +31,20 @@ const jsonData = [
       {
         TimeFrom: "09:00",
         TimeTo: "10:15",
-        ServiceType: "Personal Care",
+        ServiceType: "Leave",
+        isLeave: true,
       },
       {
         TimeFrom: "12:00",
         TimeTo: "15:30",
         ServiceType: "Shopping",
+        isLeave: false,
       },
       {
         TimeFrom: "16:00",
-        TimeTo: "17:15",
+        TimeTo: "18:15",
         ServiceType: "Meal Delivery",
+        isLeave: false,
       },
     ],
   },
@@ -55,16 +58,19 @@ const jsonData = [
         TimeFrom: "9:15",
         TimeTo: "11:30",
         ServiceType: "Personal Care",
+        isLeave: false,
       },
       {
         TimeFrom: "12:00",
         TimeTo: "16:30",
         ServiceType: "Shopping",
+        isLeave: false,
       },
       {
         TimeFrom: "17:00",
         TimeTo: "18:15",
         ServiceType: "Meal Delivery",
+        isLeave: false,
       },
     ],
   },
@@ -81,11 +87,13 @@ const gridData = [
         TimeFrom: "10:15",
         TimeTo: "12:30",
         ServiceType: "Personal CareNew",
+        isLeave: false,
       },
       {
         TimeFrom: "13:00",
         TimeTo: "17:30",
         ServiceType: "ShoppingNew",
+        isLeave: true,
       },
     ],
   },
@@ -99,11 +107,13 @@ const gridData = [
         TimeFrom: "11:15",
         TimeTo: "13:30",
         ServiceType: "Personal CareNew",
+        isLeave: false,
       },
       {
         TimeFrom: "17:00",
         TimeTo: "18:30",
         ServiceType: "ShoppingNew",
+        isLeave: false,
       },
     ],
   },
@@ -129,6 +139,7 @@ for (var m = 0; m < jsonData.length; m++) {
       title: jsonData[m].ServiceItems[i].ServiceType,
       caseId: caseName,
       pplId: m,
+      isLeave: jsonData[m].ServiceItems[i].isLeave,
     });
   }
 }

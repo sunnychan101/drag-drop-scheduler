@@ -59,12 +59,12 @@ function KScheduler(props) {
           slotDuration={30} //in minutes
           slotDivisions={1}
           startTime={"08:00"}
-          endTime={"19:00"}
+          endTime={"21:00"}
           workDayStart={"09:00"}
           workDayEnd={"19:00"}
           workWeekStart={Day.Sunday}
           workWeekEnd={Day.Monday}
-          showWorkHours={true}
+          showWorkHours={false}
           viewItem={ProportionalViewItem}
         />
       </Scheduler>

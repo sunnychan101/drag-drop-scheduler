@@ -53,11 +53,25 @@
   /* background-color: green; */
 }
 
-.k-event {
+.k-event.normal-item {
   color: black;
   background-color: transparent;
   height: 50px !important;
   border: green solid !important;
+}
+
+.k-event.leave-item {
+  color: black;
+  background-color: whitesmoke;
+  height: 50px !important;
+  border: none;
+}
+
+.k-event.leave-item .k-event-template {
+  font-size: 24px;
+  font-weight: bold;
+  text-align: center;
+  padding-top: 15px;
 }
 
 .service-group {
