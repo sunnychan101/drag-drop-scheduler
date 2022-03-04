@@ -24,10 +24,19 @@ const getRect = (el) => {
 };
 
 export const ProportionalViewItem = (props) => {
+  console.log("This is Props");
+  console.log(props);
   const item = React.createRef();
   const [display, setDisplay] = React.useState(true);
   const [visible, setVisible] = React.useState(false);
   const [lock, setLock] = React.useState(0);
+
+  var itemClass = "normal-item";
+
+  //grey item case:
+  if (props.dataItem.isLeave) {
+    itemClass = "leave-item";
+  }
 
   const reflow = () => {
     const firstSlot = props.slots && props.slots.length ? props.slots[0] : null;
@@ -82,9 +91,11 @@ export const ProportionalViewItem = (props) => {
     <SchedulerViewItem
       {...props}
       ref={item}
+      className={itemClass}
       style={{
         visibility: visible ? undefined : "hidden",
         display: display ? undefined : "none",
+
         ...props.style,
       }}
     />

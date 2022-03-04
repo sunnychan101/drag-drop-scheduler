@@ -29,18 +29,27 @@ const jsonData = [
     AssignedTo: "",
     ServiceItems: [
       {
+        TimeFrom: "08:00",
+        TimeTo: "09:00",
+        ServiceType: "Leave",
+        isLeave: true,
+      },
+      {
         TimeFrom: "11:00",
         TimeTo: "12:00",
         ServiceType: "HC45,PD30,PC30, 加納特",
+        ServiceType: "Leave",
+        isLeave: false,
       },
       {
         TimeFrom: "14:00",
         TimeTo: "15:45",
         ServiceType: "EX30,HC45,PD30 陳享樂",
-      }
+        ServiceType: "Leave",
+        isLeave: false,
+      },
     ],
-  },
-
+  }
 ];
 
 const gridData = [
@@ -59,7 +68,8 @@ const gridData = [
         TimeFrom: "12:30",
         TimeTo: "14:15",
         ServiceType: "HC45,PD30,PC30, 陳快活",
-      },
+        isLeave: false,
+      }
     ],
   },
   {
@@ -72,12 +82,14 @@ const gridData = [
         TimeFrom: "11:00",
         TimeTo: "12:45",
         ServiceType: "HC45,PD30,PC30, 占士",
+        isLeave: false
       },
       {
         TimeFrom: "16:00",
         TimeTo: "17:45",
         ServiceType: "HC45,PD30,PC30, 陳彼得",
-      },
+        isLeave: false
+      }
     ],
   },
 ];
@@ -102,6 +114,7 @@ for (var m = 0; m < jsonData.length; m++) {
       title: jsonData[m].ServiceItems[i].ServiceType,
       caseId: caseName,
       pplId: m,
+      isLeave: jsonData[m].ServiceItems[i].isLeave,
     });
   }
 }

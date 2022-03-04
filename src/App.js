@@ -42,6 +42,7 @@ function App() {
     var myData = [];
     var IDCounter = 0;
     for (const item of data) {
+      // console.log(item);
       var myitem = {
         id: IDCounter++,
         start:
@@ -53,6 +54,7 @@ function App() {
         title: item.title,
         caseId: item.caseId,
         pplId: item.pplId,
+        isLeave: item.isLeave,
       };
       myData.push(myitem);
     }
@@ -135,6 +137,7 @@ function App() {
       title: item.title,
       caseId: caseId, //"New People (Extra)",
       pplId: index,
+      isLeave: item.isLeave,
     });
 
     const newDataToShow = mappplId(dataToShow);
