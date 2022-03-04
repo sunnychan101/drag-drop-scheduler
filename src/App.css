@@ -57,7 +57,7 @@
   color: black;
   background-color: transparent;
   height: 50px !important;
-  border: solid;
+  border: green solid !important;
 }
 
 .service-group {
@@ -66,13 +66,15 @@
 }
 
 .service-row {
-  border: 1px #ccc solid;
+  border: 1px #caca2c solid;
   padding-top: 20px;
   padding-bottom: 40px;
+  margin-bottom: 10px;
   width: 100%;
 }
 
 .service-item {
   margin-left: 100px;
+
   display: inline-block;
 }
