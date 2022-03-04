@@ -1,6 +1,6 @@
 const jsonData = [
   {
-    CaseName: "Sunny Chan",
+    CaseName: "CW1",
     CaseNumber: "SCC-01-002",
     ServiceOrderNumber: "SO001-2022",
     AssignedTo: "",
@@ -23,51 +23,24 @@ const jsonData = [
     ],
   },
   {
-    CaseName: "Kelvin Leung",
+    CaseName: "CW2",
     CaseNumber: "SCC-02-002",
     ServiceOrderNumber: "SO002-2022",
     AssignedTo: "",
     ServiceItems: [
       {
-        TimeFrom: "09:00",
-        TimeTo: "10:15",
-        ServiceType: "Personal Care",
+        TimeFrom: "11:00",
+        TimeTo: "12:00",
+        ServiceType: "HC45,PD30,PC30, 加納特",
       },
       {
-        TimeFrom: "12:00",
-        TimeTo: "15:30",
-        ServiceType: "Shopping",
-      },
-      {
-        TimeFrom: "16:00",
-        TimeTo: "17:15",
-        ServiceType: "Meal Delivery",
-      },
+        TimeFrom: "14:00",
+        TimeTo: "15:45",
+        ServiceType: "EX30,HC45,PD30 陳享樂",
+      }
     ],
   },
-  {
-    CaseName: "Gordon Lau",
-    CaseNumber: "SCC-02-003",
-    ServiceOrderNumber: "SO003-2022",
-    AssignedTo: "",
-    ServiceItems: [
-      {
-        TimeFrom: "9:15",
-        TimeTo: "11:30",
-        ServiceType: "Personal Care",
-      },
-      {
-        TimeFrom: "12:00",
-        TimeTo: "16:30",
-        ServiceType: "Shopping",
-      },
-      {
-        TimeFrom: "17:00",
-        TimeTo: "18:15",
-        ServiceType: "Meal Delivery",
-      },
-    ],
-  },
+
 ];
 
 const gridData = [
@@ -78,14 +51,14 @@ const gridData = [
     AssignedTo: "",
     ServiceItems: [
       {
-        TimeFrom: "10:15",
-        TimeTo: "12:30",
-        ServiceType: "Personal CareNew",
+        TimeFrom: "09:00",
+        TimeTo: "10:45",
+        ServiceType: "HC45,PD30,PC30, 魚民樂",
       },
       {
-        TimeFrom: "13:00",
-        TimeTo: "17:30",
-        ServiceType: "ShoppingNew",
+        TimeFrom: "12:30",
+        TimeTo: "14:15",
+        ServiceType: "HC45,PD30,PC30, 陳快活",
       },
     ],
   },
@@ -96,14 +69,14 @@ const gridData = [
     AssignedTo: "",
     ServiceItems: [
       {
-        TimeFrom: "11:15",
-        TimeTo: "13:30",
-        ServiceType: "Personal CareNew",
+        TimeFrom: "11:00",
+        TimeTo: "12:45",
+        ServiceType: "HC45,PD30,PC30, 占士",
       },
       {
-        TimeFrom: "17:00",
-        TimeTo: "18:30",
-        ServiceType: "ShoppingNew",
+        TimeFrom: "16:00",
+        TimeTo: "17:45",
+        ServiceType: "HC45,PD30,PC30, 陳彼得",
       },
     ],
   },
