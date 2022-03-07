@@ -105,3 +105,62 @@
 
   display: inline-block;
 }
+
+.dialog-detail-text {
+  font-size: 20px;
+  padding: 10px;
+}
+
+.k-dialog-titlebar {
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  border: none;
+}
+.k-dialog-title {
+  font-size: 28px !important;
+}
+
+.float-left {
+  display: inline-block;
+}
+
+.float-right {
+  display: inline-block;
+  float: right;
+}
+
+.custom-table {
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-left: 1px solid;
+}
+
+.custom-table th {
+  /* background-color: #ccc; */
+  border-bottom: 1px solid;
+  font-size: 20px;
+}
+
+.custom-table th:nth-child(n + 2) {
+  border-left: 1px solid;
+}
+
+.custom-table td:nth-child(n + 2) {
+  border-left: 1px solid;
+}
+
+.custom-table td {
+  padding: 2px;
+  border-bottom: 1px solid;
+}
+
+.dialog-button-group {
+  padding-top: 15px;
+}
+
+.dialog-button-group .k-button {
+  margin-right: 10px;
+}

@@ -24,8 +24,6 @@ const getRect = (el) => {
 };
 
 export const ProportionalViewItem = (props) => {
-  console.log("This is Props");
-  console.log(props);
   const item = React.createRef();
   const [display, setDisplay] = React.useState(true);
   const [visible, setVisible] = React.useState(false);
