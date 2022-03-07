@@ -75,8 +75,21 @@
 }
 
 .service-group {
-  height: 100px;
-  padding: 10px;
+  /* height: 100px; */
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid;
+}
+
+.service-group-text {
+  display: inline-block;
+  height: 50px;
+  font-size: 24px;
+}
+
+.service-group-button {
+  display: inline-block;
+  float: right;
 }
 
 .service-row {
