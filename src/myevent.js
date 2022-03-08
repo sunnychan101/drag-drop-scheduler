@@ -23,7 +23,7 @@ const jsonData = [
       {
         TimeFrom: "11:00",
         TimeTo: "12:00",
-        ServiceType: "HC45,PD30,PC30, 加納特",
+        ServiceType: "加納特, HC45,PD30,PC30, 收費服務",
         isLeave: false,
       },
       {
@@ -35,7 +35,7 @@ const jsonData = [
       {
         TimeFrom: "14:00",
         TimeTo: "15:45",
-        ServiceType: "EX30,HC45,PD30 陳享樂",
+        ServiceType: "陳享樂, EX30,HC45,PD30 收費服務",
         isLeave: false,
       },
       {
@@ -58,13 +58,14 @@ const gridData = [
       {
         TimeFrom: "09:00",
         TimeTo: "10:45",
-        ServiceType: "HC45,PD30,PC30, 魚民樂",
+        ServiceType: "魚民樂, HC45,PD30,PC30, 收費服務",
+        isLeave: false
       },
       {
         TimeFrom: "12:30",
         TimeTo: "14:15",
-        ServiceType: "HC45,PD30,PC30, 陳快活",
-        isLeave: false,
+        ServiceType: "陳快活, HC45,PD30,PC30, 收費服務",
+        isLeave: false
       }
     ],
   },
@@ -76,14 +77,14 @@ const gridData = [
     ServiceItems: [
       {
         TimeFrom: "11:00",
-        TimeTo: "12:45",
-        ServiceType: "HC45,PD30,PC30, 占士",
+        TimeTo: "12:00",
+        ServiceType: "陳大文(秦石), EX60, 收費服務",
         isLeave: false
       },
       {
         TimeFrom: "16:00",
         TimeTo: "17:45",
-        ServiceType: "HC45,PD30,PC30, 陳彼得",
+        ServiceType: "陳彼得, HC45,PD30,PC30, 收費服務",
         isLeave: false
       }
     ],
