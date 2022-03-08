@@ -33,7 +33,8 @@ function KDraggable(props) {
         draggable
         onDrag={(ev) => dragHandler(ev)}
       >
-        {item.CaseNumber}
+        <div class="service-title">{item.CaseNumber}</div>
+
         {item.ServiceItems.map((service, index2) => {
           return rendersmallItem(service, index2);
         })}
