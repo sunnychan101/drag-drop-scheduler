@@ -5,21 +5,7 @@ const jsonData = [
     ServiceOrderNumber: "SO001-2022",
     AssignedTo: "",
     ServiceItems: [
-      // {
-      //   TimeFrom: "9:00",
-      //   TimeTo: "10:30",
-      //   ServiceType: "Personal Care",
-      // },
-      // {
-      //   TimeFrom: "14:00",
-      //   TimeTo: "15:00",
-      //   ServiceType: "Shopping",
-      // },
-      // {
-      //   TimeFrom: "15:30",
-      //   TimeTo: "16:15",
-      //   ServiceType: "Meal Delivery",
-      // },
+      
     ],
   },
   {
@@ -31,23 +17,33 @@ const jsonData = [
       {
         TimeFrom: "08:00",
         TimeTo: "09:00",
-        ServiceType: "Leave",
+        ServiceType: "Off",
         isLeave: true,
       },
       {
         TimeFrom: "11:00",
         TimeTo: "12:00",
         ServiceType: "HC45,PD30,PC30, 加納特",
-        ServiceType: "Leave",
         isLeave: false,
+      },
+      {
+        TimeFrom: "12:00",
+        TimeTo: "13:00",
+        ServiceType: "Lunch",
+        isLeave: true,
       },
       {
         TimeFrom: "14:00",
         TimeTo: "15:45",
         ServiceType: "EX30,HC45,PD30 陳享樂",
-        ServiceType: "Leave",
         isLeave: false,
       },
+      {
+        TimeFrom: "18:00",
+        TimeTo: "21:00",
+        ServiceType: "Off",
+        isLeave: true,
+      }
     ],
   }
 ];
@@ -55,7 +51,7 @@ const jsonData = [
 const gridData = [
   {
     CaseName: "",
-    CaseNumber: "SCC-02-004",
+    CaseNumber: "服務線二  秦石，新翠",
     ServiceOrderNumber: "SO004-2022",
     AssignedTo: "",
     ServiceItems: [
@@ -74,7 +70,7 @@ const gridData = [
   },
   {
     CaseName: "",
-    CaseNumber: "SCC-02-005",
+    CaseNumber: "服務線三  石門",
     ServiceOrderNumber: "SO005-2022",
     AssignedTo: "",
     ServiceItems: [
