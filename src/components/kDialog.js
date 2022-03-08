@@ -105,8 +105,8 @@ function KDialog(props) {
       <table className="custom-table">
         <tr className="header-row">
           <th className="hedaer-cell">服務內容</th>
-          <th className="hedaer-cell">開始時間</th>
-          <th className="hedaer-cell">結束時間</th>
+          {/* <th className="hedaer-cell">開始時間</th>
+          <th className="hedaer-cell">結束時間</th> */}
           <th className="hedaer-cell">時長(mins)</th>
           <th className="hedaer-cell">收費</th>
           <th className="hedaer-cell">狀態</th>
@@ -121,12 +121,12 @@ function KDialog(props) {
                   defaultValue={item.title}
                 ></DropDownList>
               </td>
-              <td>
+              {/* <td>
                 <TimePicker defaultValue={item.start}></TimePicker>
               </td>
               <td>
                 <TimePicker defaultValue={item.end}></TimePicker>
-              </td>
+              </td> */}
               <td>{(item.end - item.start) / (1000 * 60)}</td>
               <td>
                 <Checkbox defaultChecked={true} />
