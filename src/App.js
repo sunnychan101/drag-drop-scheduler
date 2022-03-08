@@ -3,11 +3,12 @@ import "@progress/kendo-theme-default";
 import "@progress/kendo-theme-material";
 import "@progress/kendo-theme-bootstrap";
 import "./App.css";
-import React, { useEffect, useReducer } from "react";
+import React, { useEffect, useReducer, useState } from "react";
 import { displayDate, sampleData, sampleDataWithResources } from "./events";
 import { customData, customResourceData } from "./myevent";
 import KScheduler from "./components/kScheduler";
 import KDraggable from "./components/kDraggable";
+import KDialog from "./components/kDialog";
 
 function App() {
   const stringToDate = (dateString) => {
@@ -32,7 +33,8 @@ function App() {
     dateToString(displayDate)
   );
 
-  const [testAttr, set_testAttr] = React.useState(0);
+  const [modalVisible, set_modalVisible] = useState(false);
+  const [dialogData, set_DialogData] = useState([]);
 
   const configTime = (time) => {
     return currentDate + "T" + time;
@@ -41,6 +43,8 @@ function App() {
   const adddate = (data) => {
     var myData = [];
     var IDCounter = 0;
+    console.log("this is data");
+    console.log(data);
     for (const item of data) {
       // console.log(item);
       var myitem = {
@@ -55,6 +59,8 @@ function App() {
         caseId: item.caseId,
         pplId: item.pplId,
         isLeave: item.isLeave,
+        caseNo: item.caseNo,
+        serviceOrderNumber: item.serviceOrderNumber,
       };
       myData.push(myitem);
     }
@@ -138,6 +144,8 @@ function App() {
       caseId: caseId, //"New People (Extra)",
       pplId: index,
       isLeave: item.isLeave,
+      caseNo: "SCC/IH21",
+      serviceOrderNumber: "012345",
     });
 
     const newDataToShow = mappplId(dataToShow);
@@ -242,7 +250,6 @@ function App() {
     var index;
     if (dragIndex !== false) {
       console.log("it is dragged from scheduler");
-      set_testAttr(testAttr + 1);
 
       while (
         !ele.hasAttribute("data-resource-index") &&
@@ -332,6 +339,24 @@ function App() {
     }
   };
 
+  // ABUOT MODAL
+  const toggleModal = (index = -1) => {
+    if (index == -1) {
+      set_modalVisible(!modalVisible);
+    } else {
+      set_modalVisible(!modalVisible);
+      var dialogTempData = [];
+      for (const item of dataToShow) {
+        if (item.pplId == index) {
+          dialogTempData.push(item);
+        }
+      }
+      set_DialogData(dialogTempData);
+    }
+  };
+
+  // ABOUT MODAL
+
   useEffect(() => {
     console.log("called useEffect");
     document.addEventListener("dragover", function (ev) {
@@ -362,11 +387,34 @@ function App() {
       console.log("you release");
       set_dragIndex(false);
     });
-  }, [hasSchedule]);
+
+    document.addEventListener("dblclick", function (ev) {
+      // console.log("double clicked");
+      var ele = ev.target;
+      while (
+        !ele.hasAttribute("data-resource-index") &&
+        !ele.hasAttribute("data-group-index")
+      ) {
+        ele = ele.parentElement;
+      }
+      var index;
+      if (ele.hasAttribute("data-resource-index")) {
+        index = ele.getAttribute("data-resource-index");
+      } else {
+        index = ele.getAttribute("data-group-index");
+      }
+      if (hasSchedule(index) == false) {
+        return console.log("nothing in this row");
+      }
+      // console.log(index);
+      toggleModal(index);
+      // ele.setAttribute("draggable", true);
+    });
+  }, [hasSchedule, toggleModal]);
   console.log("render App.js");
-  console.log(dataToShow);
-  console.log(dragItem);
-  console.log(resource_data);
+  // console.log(dataToShow);
+  // console.log(dragItem);
+  // console.log(resource_data);
 
   return (
     <div className="custom-container">
@@ -379,6 +427,7 @@ function App() {
         />
         <KDraggable dragHandler={dragHandler} />
       </div>
+      {modalVisible && <KDialog closeHandler={toggleModal} data={dialogData} />}
     </div>
   );
 }

@@ -75,20 +75,102 @@
 }
 
 .service-group {
-  height: 100px;
-  padding: 10px;
+  /* height: 100px; */
+  margin-top: 20px;
+  padding: 20px;
+  border: 1px solid;
+}
+
+.service-group-text {
+  display: inline-block;
+  height: 50px;
+  font-size: 24px;
+}
+
+.service-group-button {
+  display: inline-block;
+  float: right;
 }
 
 .service-row {
   border: 1px #caca2c solid;
+  /* padding-top: 20px;
+  padding-bottom: 40px; */
+  margin-bottom: 10px;
+  width: 110%;
+}
+
+.service-row .service-title {
   padding-top: 20px;
   padding-bottom: 40px;
-  margin-bottom: 10px;
-  width: 100%;
+  padding-left: 20px;
+  display: inline-block;
 }
 
 .service-item {
   margin-left: 100px;
-
+  margin-top: 10px;
+  padding: 0 20px 20px 20px;
+  border: 1px solid #ccc;
+  height: 100%;
   display: inline-block;
+}
+
+.dialog-detail-text {
+  font-size: 20px;
+  padding: 10px;
+}
+
+.k-dialog-titlebar {
+  font-weight: bold;
+  color: black;
+  background-color: white;
+  border: none;
+}
+.k-dialog-title {
+  font-size: 28px !important;
+}
+
+.float-left {
+  display: inline-block;
+}
+
+.float-right {
+  display: inline-block;
+  float: right;
+}
+
+.custom-table {
+  width: 100%;
+  text-align: center;
+  border-top: 1px solid;
+  border-right: 1px solid;
+  border-left: 1px solid;
+}
+
+.custom-table th {
+  /* background-color: #ccc; */
+  border-bottom: 1px solid;
+  font-size: 20px;
+}
+
+.custom-table th:nth-child(n + 2) {
+  border-left: 1px solid;
+}
+
+.custom-table td:nth-child(n + 2) {
+  border-left: 1px solid;
+}
+
+.custom-table td {
+  padding: 2px;
+  border-bottom: 1px solid;
+}
+
+.dialog-button-group {
+  padding-top: 15px;
+}
+
+.dialog-button-group .k-button {
+  margin-right: 10px;
 }

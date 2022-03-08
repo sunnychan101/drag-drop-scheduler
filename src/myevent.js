@@ -95,7 +95,8 @@ const myResourceData = [];
 
 for (var m = 0; m < jsonData.length; m++) {
   var caseName = jsonData[m].CaseName;
-  var ServiceOrderNumber = jsonData[m].ServiceOrderNumber;
+  var caseNo = jsonData[m].CaseNumber;
+  var serviceOrderNumber = jsonData[m].ServiceOrderNumber;
   myResourceData.push({
     id: m,
     text: caseName,
@@ -111,6 +112,9 @@ for (var m = 0; m < jsonData.length; m++) {
       caseId: caseName,
       pplId: m,
       isLeave: jsonData[m].ServiceItems[i].isLeave,
+      //
+      caseNo: caseNo,
+      serviceOrderNumber: serviceOrderNumber,
     });
   }
 }
