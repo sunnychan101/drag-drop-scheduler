@@ -6,7 +6,7 @@ import { Dialog } from "@progress/kendo-react-dialogs";
 import { Button } from "@progress/kendo-react-buttons";
 import { DropDownList } from "@progress/kendo-react-dropdowns";
 import { TimePicker } from "@progress/kendo-react-dateinputs";
-import { Checkbox, RadioButton } from "@progress/kendo-react-inputs";
+import { Input, Checkbox, RadioButton } from "@progress/kendo-react-inputs";
 
 // themeColor: null | "base" | "primary" | "secondary" | "tertiary" | "info" | "success" | "warning" | "error" | "dark" | "light" | "inverse"
 
@@ -74,21 +74,55 @@ function KDialog(props) {
       const { caseId, caseNo, serviceOrderNumber } = data[0];
       const { date, timeStart, timeEnd, duration } = getTimeInfo();
       //   getTimeInfo();
+      // return (
+      //   <div>
+      //     <div className="dialog-detail-text">案主姓名 : 加納特</div>
+      //     <div className="dialog-detail-text">
+      //       個案編號 : {caseNo + "/" + serviceOrderNumber}
+      //     </div>
+      //     <div className="dialog-detail-text">服務日期 : {date}</div>
+      //     <div className="dialog-detail-text">
+      //       服務時間 : {timeStart} - {timeEnd}
+      //     </div>
+      //     <div className="dialog-detail-text">服務時長 : {duration}</div>
+      //     <div className="dialog-detail-text">地址 : YYY樓</div>
+      //     <div className="dialog-detail-text">負責同工 : {caseId}</div>
+      //     <div className="dialog-detail-text">備註 : </div>
+      //     <div className="dialog-detail-text">服務組合項目 : </div>
+      //     <div className="dialog-detail-text float-left">
+      //       <Button themeColor="primary" fillMode="outline">
+      //         案主服務安排
+      //       </Button>
+      //     </div>
+      //     <div className="dialog-detail-text float-right">
+      //       <Button themeColor="primary">新增</Button>
+      //     </div>
+      //   </div>
+      // );
       return (
         <div>
-          <div className="dialog-detail-text">服務日期 : {date}</div>
+          <div className="dialog-detail-text">案主姓名 : 加納特</div>
+          <div className="dialog-detail-text">個案編號 : SCC/IH21/012345</div>
+          <div className="dialog-detail-text">服務日期 : 2021-11-03</div>
           <div className="dialog-detail-text">
-            服務時間 : {timeStart} - {timeEnd}
+            服務開始時間 :
+            <div style={{ display: "inline-block" }}>
+              <Input defaultValue={"11:00"}></Input>
+            </div>
           </div>
-          <div className="dialog-detail-text">服務時長 : {duration}</div>
-          <div className="dialog-detail-text">案主姓名 : XXX</div>
-          <div className="dialog-detail-text">
-            個案編號 : {caseNo + "/" + serviceOrderNumber}
+          <div className="dialog-detail-text float-right">
+            出勤費 : 秦石(0.5)
           </div>
-          <div className="dialog-detail-text">地址 : YYY樓</div>
-          <div className="dialog-detail-text">負責同工 : {caseId}</div>
-          <div className="dialog-detail-text">備註 : </div>
-          <div className="dialog-detail-text float-left">服務組合項目 : </div>
+          <div className="dialog-detail-text">服務時長 : 1.75</div>
+          <div className="dialog-detail-text">地址 : 秦石邨石塋樓</div>
+          <div className="dialog-detail-text">負責同工 : 小美</div>
+          <div className="dialog-detail-text">更表備註 : </div>
+          <div className="dialog-detail-text">服務組合項目 : </div>
+          <div className="dialog-detail-text float-left">
+            <Button themeColor="primary" fillMode="outline">
+              案主服務安排
+            </Button>
+          </div>
           <div className="dialog-detail-text float-right">
             <Button themeColor="primary">新增</Button>
           </div>
@@ -101,6 +135,44 @@ function KDialog(props) {
 
   const renderTableItem = () => {
     // console.log(data);
+    // return (
+    //   <table className="custom-table">
+    //     <tr className="header-row">
+    //       <th className="hedaer-cell">服務內容</th>
+    //       {/* <th className="hedaer-cell">開始時間</th>
+    //       <th className="hedaer-cell">結束時間</th> */}
+    //       <th className="hedaer-cell">時長(mins)</th>
+    //       <th className="hedaer-cell">收費</th>
+    //       <th className="hedaer-cell">狀態</th>
+    //       <th className="hedaer-cell">行動</th>
+    //     </tr>
+    //     {data.map((item) => {
+    //       return (
+    //         <tr>
+    //           <td>
+    //             <DropDownList
+    //               data={[item.title]}
+    //               defaultValue={item.title}
+    //             ></DropDownList>
+    //           </td>
+    //           {/* <td>
+    //             <TimePicker defaultValue={item.start}></TimePicker>
+    //           </td>
+    //           <td>
+    //             <TimePicker defaultValue={item.end}></TimePicker>
+    //           </td> */}
+    //           <td>{(item.end - item.start) / (1000 * 60)}</td>
+    //           <td>
+    //             <Checkbox defaultChecked={true} />
+    //           </td>
+    //           <td>待定</td>
+    //           <td>
+    //             <RadioButton></RadioButton>
+    //           </td>
+    //         </tr>
+    //       );
+    //     })}
+    //   </table>
     return (
       <table className="custom-table">
         <tr className="header-row">
@@ -112,32 +184,80 @@ function KDialog(props) {
           <th className="hedaer-cell">狀態</th>
           <th className="hedaer-cell">行動</th>
         </tr>
-        {data.map((item) => {
-          return (
-            <tr>
-              <td>
-                <DropDownList
-                  data={[item.title]}
-                  defaultValue={item.title}
-                ></DropDownList>
-              </td>
-              {/* <td>
+        <tr>
+          <td>
+            <DropDownList
+              data={["家居清潔"]}
+              defaultValue="家居清潔"
+            ></DropDownList>
+          </td>
+          {/* <td>
                 <TimePicker defaultValue={item.start}></TimePicker>
               </td>
               <td>
                 <TimePicker defaultValue={item.end}></TimePicker>
               </td> */}
-              <td>{(item.end - item.start) / (1000 * 60)}</td>
-              <td>
-                <Checkbox defaultChecked={true} />
+
+          <td>
+            <Input defaultValue={"45"}></Input>
+          </td>
+          <td>
+            <Checkbox defaultChecked={true} />
+          </td>
+          <td>待定</td>
+          <td>
+            <RadioButton checked></RadioButton>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <DropDownList
+              data={["購物外送"]}
+              defaultValue="購物外送"
+            ></DropDownList>
+          </td>
+          {/* <td>
+                <TimePicker defaultValue={item.start}></TimePicker>
               </td>
-              <td>待定</td>
               <td>
-                <RadioButton></RadioButton>
+                <TimePicker defaultValue={item.end}></TimePicker>
+              </td> */}
+
+          <td>
+            <Input defaultValue={"30"}></Input>
+          </td>
+          <td>
+            <Checkbox defaultChecked={true} />
+          </td>
+          <td>待定</td>
+          <td>
+            <RadioButton checked></RadioButton>
+          </td>
+        </tr>
+        <tr>
+          <td>
+            <DropDownList
+              data={["個人護理"]}
+              defaultValue="個人護理"
+            ></DropDownList>
+          </td>
+          {/* <td>
+                <TimePicker defaultValue={item.start}></TimePicker>
               </td>
-            </tr>
-          );
-        })}
+              <td>
+                <TimePicker defaultValue={item.end}></TimePicker>
+              </td> */}
+          <td>
+            <Input defaultValue={"30"}></Input>
+          </td>
+          <td>
+            <Checkbox defaultChecked={true} />
+          </td>
+          <td>待定</td>
+          <td>
+            <RadioButton checked></RadioButton>
+          </td>
+        </tr>
       </table>
     );
   };
@@ -167,7 +287,7 @@ function KDialog(props) {
   return (
     <Dialog
       className="custom-modal"
-      width="50%"
+      width="30%"
       title={"服務明細"}
       onClose={closeHandler}
     >

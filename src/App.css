@@ -174,3 +174,7 @@
 .dialog-button-group .k-button {
   margin-right: 10px;
 }
+
+.k-input {
+  width: 90% !important;
+}
