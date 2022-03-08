@@ -5,6 +5,10 @@ import React from "react";
 import { customGridData } from "../myevent";
 import { Button } from "@progress/kendo-react-buttons";
 
+/////////////////////////////////////////////////////////////////
+// PLEASE CHECK dragHandler() METHOD AFTER UPDATING THIS FILE ///
+/////////////////////////////////////////////////////////////////
+
 function KDraggable(props) {
   const { dragHandler } = props;
 

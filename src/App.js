@@ -46,7 +46,7 @@ function App() {
     console.log("this is data");
     console.log(data);
     for (const item of data) {
-      // console.log(item);
+      console.log(item);
       var myitem = {
         id: IDCounter++,
         start:
@@ -151,6 +151,7 @@ function App() {
     const newDataToShow = mappplId(dataToShow);
 
     if (addDate) {
+      console.log(newDataToShow);
       set_DataToShow(adddate(newDataToShow));
     } else {
       set_DataToShow(newDataToShow);
@@ -318,6 +319,8 @@ function App() {
   const dragHandler = (ev) => {
     if (ddswitch) {
       set_ddswitch(false);
+      console.log("ev.target");
+      console.log(ev.target);
       var newItem = {
         CaseName: "",
         CaseNumber: "",
@@ -327,7 +330,8 @@ function App() {
       };
       for (const child of ev.target.childNodes) {
         // console.log(child.nodeType);
-        if (child.nodeType != 3) {
+        if (child.classList.contains("service-item")) {
+          // 20200308
           newItem.ServiceItems.push({
             start: child.getAttribute("data-start"),
             end: child.getAttribute("data-end"),
@@ -335,6 +339,7 @@ function App() {
           });
         }
       }
+      console.log(newItem);
       set_dragItem(newItem);
     }
   };
